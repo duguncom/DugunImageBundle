@@ -1,0 +1,7 @@
+framework:
+    secret: "Three can keep a secret, if two of them are dead."
+
+dugun_image:
+    temporary_folder: /tmp
+    watermark_position: bottom
+    watermark_file: Resources/assets/img/watermark_normal.png

@@ -2,11 +2,11 @@
 
 namespace Dugun\ImageBundle\Tests;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Dugun\ImageBundle\Service\DugunImageService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Rotate extends WebTestCase
+class Rotate extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -14,16 +14,22 @@ class Rotate extends WebTestCase
      */
     private $container;
 
+    /**
+     * @var DugunImageService $service
+     */
+    private $service;
+
     public function setUp()
     {
-        $kernel = static::createKernel();
+        $kernel = new \AppKernel('test', true);
         $kernel->boot();
         $this->container = $kernel->getContainer();
+        $this->service = $this->container->get('dugun_image.service.image_service');
     }
 
     public function test_watermark()
     {
-        $service = $this->container->get('dugun_image.service.image_service');
+        $this->assertInstanceOf('\Dugun\ImageBundle\Service\DugunImageService', $this->service);
 
         $file = new UploadedFile(
             __DIR__ . '/../Resources/assets/test/file1.jpg',
@@ -31,19 +37,19 @@ class Rotate extends WebTestCase
             'image/jpeg'
         );
 
-        $image = $service->openFile($file);
+        $image = $this->service->openFile($file);
         $width = $image->getWidth();
         $height = $image->getHeight();
-        $service->rotate($image, 90);
+        $this->service->rotate($image, 90);
         $this->assertEquals($width, $image->getHeight());
         $this->assertEquals($height, $image->getWidth());
-        $service->rotate($image, 90);
+        $this->service->rotate($image, 90);
         $this->assertEquals($width, $image->getWidth());
         $this->assertEquals($height, $image->getHeight());
 
         /**
          * Sorry dude, we cannot rotate a string.
          */
-        $service->rotate('asdasd', 180);
+        $this->service->rotate('asdasd', 180);
     }
 }
