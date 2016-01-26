@@ -8,6 +8,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class DugunImageService
 {
 
+    /**
+     * Parameters that carry watermark, temp folder details.
+     * You can define them from your config.yml
+     *
+     * @var array $parameters
+     */
     private $parameters;
 
     /**
@@ -24,10 +30,10 @@ class DugunImageService
      * Crops image by given parameters
      *
      * @param Image $image
-     * @param $x start point of x axis
-     * @param $y start point of y axis
-     * @param $width new image's width
-     * @param $height new image's height
+     * @param integer $x start point of x axis
+     * @param integer $y start point of y axis
+     * @param integer $width new image's width
+     * @param integer $height new image's height
      * @return Image
      */
     public function crop($image, $x, $y, $width, $height)
@@ -57,7 +63,7 @@ class DugunImageService
      * Returns width of given image
      *
      * @param Image $image
-     * @return mixed
+     * @return integer
      */
     public function getWidth($image)
     {
@@ -68,7 +74,7 @@ class DugunImageService
      * Returns height of given image
      *
      * @param Image $image
-     * @return mixed
+     * @return integer
      */
     public function getHeight($image)
     {
@@ -79,8 +85,8 @@ class DugunImageService
      * Resizes given image. It always follows ascept ratio
      *
      * @param Image $image
-     * @param $resizeWidth
-     * @param $resizeHeight
+     * @param integer $resizeWidth
+     * @param integer $resizeHeight
      * @return Image
      */
     public function resize($image, $resizeWidth = null, $resizeHeight = null)
@@ -115,7 +121,7 @@ class DugunImageService
     /**
      * Gets watermark image from config and check if it is exist.
      *
-     * @return string
+     * @return string|null
      */
     private function getWatermarkFile()
     {
@@ -134,7 +140,7 @@ class DugunImageService
      *  We are sending image path to image service and it loads from path.
      *
      *
-     * @param $image
+     * @param mixed $image
      * @return Image
      */
     public function openFile($image)
@@ -170,7 +176,7 @@ class DugunImageService
     /**
      * Sets watermark image for instantly
      *
-     * @param $filePath
+     * @param string $filePath
      * @return string
      */
     public function setWatermarkFile($filePath)
@@ -181,7 +187,7 @@ class DugunImageService
 
     /**
      * Sets watermark position for instance
-     * @param $position
+     * @param string $position
      * @return string
      */
     public function setWatermarkPosition($position)
@@ -194,7 +200,7 @@ class DugunImageService
      * Rotates image by given degree
      *
      * @param Image $image
-     * @param $clockwiseDegree
+     * @param integer $clockwiseDegree
      * @return Image
      */
     public function rotate($image, $clockwiseDegree)
