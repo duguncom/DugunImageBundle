@@ -1,0 +1,8 @@
+services:
+#    dugun_image.example:
+#        class: Dugun\ImageBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    dugun_image.service.image_service:
+        class: Dugun\ImageBundle\Service\DugunImageService
+        arguments: ['%dugun_image.config%']

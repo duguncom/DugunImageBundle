@@ -1,0 +1,30 @@
+{
+  "name": "duguncom/imagebundle",
+  "description": "A image manipulation bundle for duguncom",
+  "type": "symfony-bundle",
+  "authors": [
+    {
+      "name": "salah aldin alsasa",
+      "email": "salahalsasa@gmail.com"
+    },
+    {
+      "name": "guven atbakan",
+      "email": "guven@atbakan.com"
+    }
+  ],
+  "keywords": [
+    "image bundle"
+  ],
+  "licensse": [
+    "MIT"
+  ],
+  "require": {
+    "intervention/image": "^2.3"
+  },
+  "autoload": {
+    "psr-0": {
+      "Dugun\\UploadBundle": ""
+    }
+  },
+  "target-dir": "Dugun/ImageBundle"
+}
