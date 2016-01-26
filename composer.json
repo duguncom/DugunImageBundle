@@ -23,7 +23,7 @@
   },
   "autoload": {
     "psr-0": {
-      "Dugun\\UploadBundle": ""
+      "Dugun\\ImageBundle": ""
     }
   },
   "target-dir": "Dugun/ImageBundle"
