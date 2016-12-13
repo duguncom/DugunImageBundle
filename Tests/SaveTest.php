@@ -2,20 +2,34 @@
 
 namespace Dugun\ImageBundle\Tests;
 
-
-use Imagine\Image\Box;
-use Imagine\Image\Point;
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Dugun\ImageBundle\Service\DugunImageService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class SaveTest extends WebTestCase
+class SaveTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * @var DugunImageService $service
+     */
+    private $service;
+
+    public function setUp()
+    {
+        $kernel = new \AppKernel('test', true);
+        $kernel->boot();
+        $this->container = $kernel->getContainer();
+        $this->service = $this->container->get('dugun_image.service.image_service');
+    }
 
     public function test_open()
     {
-
-        $container = $this->getContainer();
-        $service = $container->get('dugun_image.service.image_service');
+        $this->assertInstanceOf('\Dugun\ImageBundle\Service\DugunImageService', $this->service);
 
         $file = new UploadedFile(
             __DIR__ . '/../Resources/assets/test/file1.jpg',
@@ -23,27 +37,27 @@ class SaveTest extends WebTestCase
             'image/jpeg'
         );
 
-        $image = $service->openFile($file);
-        $originalPath = $service->getPath($image);
+        $image = $this->service->openFile($file);
+        $originalPath = $this->service->getPath($image);
 
 
-        $service->save($image);
-        $temporaryPath = $service->getPath($image);
+        $this->service->save($image);
+        $temporaryPath = $this->service->getPath($image);
         $this->assertNotEquals($originalPath, $temporaryPath);
 
-        $service->save($image, true);
-        $this->assertEquals($temporaryPath, $service->getPath($image));
+        $this->service->save($image, true);
+        $this->assertEquals($temporaryPath, $this->service->getPath($image));
 
-        unlink($service->getPath($image));
+        unlink($this->service->getPath($image));
         /**
          * check image is deleted
          */
-        $this->assertFalse(file_exists($service->getPath($image)));
+        $this->assertFalse(file_exists($this->service->getPath($image)));
 
         /**
          * you must send an image instance!!11111birbirir
          */
-        $service->save('asdasd');
+        $this->service->save('asdasd');
 
 
     }

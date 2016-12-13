@@ -2,35 +2,52 @@
 
 namespace Dugun\ImageBundle\Tests;
 
-
-use Imagine\Image\Box;
-use Imagine\Image\Point;
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Dugun\ImageBundle\Service\DugunImageService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class WatermarkTest extends WebTestCase
+class WatermarkTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * @var DugunImageService $service
+     */
+    private $service;
+
+    public function setUp()
+    {
+        $kernel = new \AppKernel('test', true);
+        $kernel->boot();
+        $this->container = $kernel->getContainer();
+        $this->service = $this->container->get('dugun_image.service.image_service');
+    }
+
     public function test_watermark()
     {
-        $container = $this->getContainer();
-        $service = $container->get('dugun_image.service.image_service');
+        $this->assertInstanceOf('\Dugun\ImageBundle\Service\DugunImageService', $this->service);
 
         $file = new UploadedFile(
             __DIR__ . '/../Resources/assets/test/file1.jpg',
             'file1.jpg',
             'image/jpeg'
         );
-        $image = $service->openFile($file);
+        $image = $this->service->openFile($file);
 
-        $service->setWatermarkPosition('');
-        $service->addWatermark($image);
+        $this->service->setWatermarkPosition('');
+        $this->service->addWatermark($image);
 
         /**
          * We cannot add watermark to a string yay!
          */
-        $service->addWatermark('asdasd');
+        $this->service->addWatermark('asdasd');
 
-        $service->setWatermarkFile('this-file-is-not-exist.jpg');
-        $service->addWatermark($image);
+        $this->service->setWatermarkFile('this-file-is-not-exist.jpg');
+        $this->service->addWatermark($image);
+
     }
 }
