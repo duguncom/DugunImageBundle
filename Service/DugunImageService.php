@@ -1,4 +1,5 @@
 <?php
+
 namespace Dugun\ImageBundle\Service;
 
 use Dugun\ImageBundle\Service\Image\InterventionImageService;
@@ -7,33 +8,41 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DugunImageService
 {
-
     /**
      * Parameters that carry watermark, temp folder details.
-     * You can define them from your config.yml
+     * You can define them from your config.yml.
      *
-     * @var array $parameters
+     * @var array
      */
     private $parameters;
 
     /**
-     * ImageService constructor.
-     * @param $parameters
+     * @var string
      */
-    public function __construct($parameters)
+    protected $kernelRootDir;
+
+    /**
+     * ImageService constructor.
+     *
+     * @param $parameters
+     * @param $kernelRootDir
+     */
+    public function __construct($parameters, $kernelRootDir)
     {
         $this->imageService = new InterventionImageService();
         $this->parameters = $parameters;
+        $this->kernelRootDir = $kernelRootDir;
     }
 
     /**
-     * Crops image by given parameters
+     * Crops image by given parameters.
      *
      * @param Image $image
-     * @param integer $x start point of x axis
-     * @param integer $y start point of y axis
-     * @param integer $width new image's width
-     * @param integer $height new image's height
+     * @param int   $x      start point of x axis
+     * @param int   $y      start point of y axis
+     * @param int   $width  new image's width
+     * @param int   $height new image's height
+     *
      * @return Image
      */
     public function crop($image, $x, $y, $width, $height)
@@ -42,7 +51,7 @@ class DugunImageService
             $imageWidth = $this->getWidth($image);
             $imageHeight = $this->getHeight($image);
 
-            /**
+            /*
              * If width > fileWidth, there is a serious problem.
              * Are you tring to crop outside of image??
              */
@@ -55,15 +64,15 @@ class DugunImageService
             }
         }
 
-
         return $image;
     }
 
     /**
-     * Returns width of given image
+     * Returns width of given image.
      *
      * @param Image $image
-     * @return integer
+     *
+     * @return int
      */
     public function getWidth($image)
     {
@@ -71,10 +80,11 @@ class DugunImageService
     }
 
     /**
-     * Returns height of given image
+     * Returns height of given image.
      *
      * @param Image $image
-     * @return integer
+     *
+     * @return int
      */
     public function getHeight($image)
     {
@@ -82,11 +92,12 @@ class DugunImageService
     }
 
     /**
-     * Resizes given image. It always follows ascept ratio
+     * Resizes given image. It always follows ascept ratio.
      *
      * @param Image $image
-     * @param integer $resizeWidth
-     * @param integer $resizeHeight
+     * @param int   $resizeWidth
+     * @param int   $resizeHeight
+     *
      * @return Image
      */
     public function resize($image, $resizeWidth = null, $resizeHeight = null)
@@ -99,9 +110,10 @@ class DugunImageService
     }
 
     /**
-     * Adds watermark to an image if watermark file isset and exist
+     * Adds watermark to an image if watermark file isset and exist.
      *
      * @param Image $image
+     *
      * @return Image
      */
     public function addWatermark($image)
@@ -111,10 +123,13 @@ class DugunImageService
             if ($watermarkFile !== null) {
                 $watermark = $this->openFile($watermarkFile);
                 $watermarkPosition = $this->getWatermarkPosition();
+
                 return $this->imageService->addWatermark($image, $watermark, $watermarkPosition);
             }
+
             return $image;
         }
+
         return $image;
     }
 
@@ -125,12 +140,12 @@ class DugunImageService
      */
     private function getWatermarkFile()
     {
-        $image = $this->parameters['watermark_file'];
+        $image = dirname($this->kernelRootDir).'/'.$this->parameters['watermark_file'];
         if ($image && file_exists($image)) {
             return $image;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -141,6 +156,7 @@ class DugunImageService
      *
      *
      * @param mixed $image
+     *
      * @return Image
      */
     public function openFile($image)
@@ -162,6 +178,7 @@ class DugunImageService
 
     /**
      * Gets watermark position from config.
+     *
      * @return string
      */
     private function getWatermarkPosition()
@@ -170,37 +187,44 @@ class DugunImageService
         if (!$watermarkPosition) {
             $watermarkPosition = 'bottom';
         }
+
         return $watermarkPosition;
     }
 
     /**
-     * Sets watermark image for instantly
+     * Sets watermark image for instantly.
      *
      * @param string $filePath
+     *
      * @return string
      */
     public function setWatermarkFile($filePath)
     {
         $this->parameters['watermark_file'] = $filePath;
+
         return $filePath;
     }
 
     /**
-     * Sets watermark position for instance
+     * Sets watermark position for instance.
+     *
      * @param string $position
+     *
      * @return string
      */
     public function setWatermarkPosition($position)
     {
         $this->parameters['watermark_position'] = $position;
+
         return $position;
     }
 
     /**
-     * Rotates image by given degree
+     * Rotates image by given degree.
      *
      * @param Image $image
-     * @param integer $clockwiseDegree
+     * @param int   $clockwiseDegree
+     *
      * @return Image
      */
     public function rotate($image, $clockwiseDegree)
@@ -213,32 +237,33 @@ class DugunImageService
     }
 
     /**
-     *
-     *
      * @param Image $image
-     * @param bool $overwrite
+     * @param bool  $overwrite
+     *
      * @return Image
      */
     public function save($image, $overwrite = false)
     {
         if ($image instanceof Image) {
             if (!$overwrite) {
-                $tmp_dir = $this->parameters['temporary_folder'] . '/' . time() . '_';  //should come form config
+                $tmp_dir = $this->parameters['temporary_folder'].'/'.time().'_';  //should come form config
             } else {
-                $tmp_dir = $image->dirname . '/';
+                $tmp_dir = $image->dirname.'/';
             }
+
             return $this->imageService->save($image, $tmp_dir);
         }
+
         return $image;
     }
 
     /**
      * @param Image $image
+     *
      * @return string
      */
     public function getPath($image)
     {
         return $this->imageService->getPath($image);
     }
-
 }
