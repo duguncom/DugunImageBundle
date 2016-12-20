@@ -8,14 +8,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ResizeTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var ContainerInterface
      */
     private $container;
 
     /**
-     * @var DugunImageService $service
+     * @var DugunImageService
      */
     private $service;
 
@@ -32,7 +31,7 @@ class ResizeTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Dugun\ImageBundle\Service\DugunImageService', $this->service);
 
         $file = new UploadedFile(
-            __DIR__ . '/../Resources/assets/test/file1.jpg',
+            __DIR__.'/../Resources/assets/test/file1.jpg',
             'file1.jpg',
             'image/jpeg'
         );
@@ -58,7 +57,7 @@ class ResizeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(300, $this->service->getWidth($image));
         $this->assertEquals(1000, $this->service->getHeight($image));
 
-        /**
+        /*
          * dude, we cannot resize a string. what were you thinking????
          */
         $this->service->resize('adad', 100, 50);

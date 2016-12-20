@@ -8,14 +8,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class WatermarkTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var ContainerInterface
      */
     private $container;
 
     /**
-     * @var DugunImageService $service
+     * @var DugunImageService
      */
     private $service;
 
@@ -32,7 +31,7 @@ class WatermarkTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Dugun\ImageBundle\Service\DugunImageService', $this->service);
 
         $file = new UploadedFile(
-            __DIR__ . '/../Resources/assets/test/file1.jpg',
+            __DIR__.'/../Resources/assets/test/file1.jpg',
             'file1.jpg',
             'image/jpeg'
         );
@@ -41,13 +40,12 @@ class WatermarkTest extends \PHPUnit_Framework_TestCase
         $this->service->setWatermarkPosition('');
         $this->service->addWatermark($image);
 
-        /**
+        /*
          * We cannot add watermark to a string yay!
          */
         $this->service->addWatermark('asdasd');
 
         $this->service->setWatermarkFile('this-file-is-not-exist.jpg');
         $this->service->addWatermark($image);
-
     }
 }

@@ -8,14 +8,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Rotate extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var ContainerInterface
      */
     private $container;
 
     /**
-     * @var DugunImageService $service
+     * @var DugunImageService
      */
     private $service;
 
@@ -32,7 +31,7 @@ class Rotate extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Dugun\ImageBundle\Service\DugunImageService', $this->service);
 
         $file = new UploadedFile(
-            __DIR__ . '/../Resources/assets/test/file1.jpg',
+            __DIR__.'/../Resources/assets/test/file1.jpg',
             'file1.jpg',
             'image/jpeg'
         );
@@ -47,7 +46,7 @@ class Rotate extends \PHPUnit_Framework_TestCase
         $this->assertEquals($width, $image->getWidth());
         $this->assertEquals($height, $image->getHeight());
 
-        /**
+        /*
          * Sorry dude, we cannot rotate a string.
          */
         $this->service->rotate('asdasd', 180);

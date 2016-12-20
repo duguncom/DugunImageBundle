@@ -8,14 +8,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CropTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var ContainerInterface
      */
     private $container;
 
     /**
-     * @var DugunImageService $service
+     * @var DugunImageService
      */
     private $service;
 
@@ -27,13 +26,12 @@ class CropTest extends \PHPUnit_Framework_TestCase
         $this->service = $this->container->get('dugun_image.service.image_service');
     }
 
-
     public function test_crop()
     {
         $this->assertInstanceOf('\Dugun\ImageBundle\Service\DugunImageService', $this->service);
 
         $file = new UploadedFile(
-            __DIR__ . '/../Resources/assets/test/file1.jpg',
+            __DIR__.'/../Resources/assets/test/file1.jpg',
             'file1.jpg',
             'image/jpeg'
         );
@@ -58,8 +56,7 @@ class CropTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1366, $this->service->getWidth($croppedImage));
         $this->assertEquals(768, $this->service->getHeight($croppedImage));
 
-
-        /**
+        /*
          * We cannot crop :(
          */
         $this->service->crop('asdasd', 0, 0, 100, 100);

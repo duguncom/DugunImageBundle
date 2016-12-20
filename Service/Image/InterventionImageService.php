@@ -1,4 +1,5 @@
 <?php
+
 namespace Dugun\ImageBundle\Service\Image;
 
 use Dugun\ImageBundle\Contracts\DugunImageInterface;
@@ -7,9 +8,8 @@ use Intervention\Image\ImageManager;
 
 class InterventionImageService implements DugunImageInterface
 {
-
     /**
-     * @var ImageManager $imageManager
+     * @var ImageManager
      */
     private $imageManager;
 
@@ -21,6 +21,7 @@ class InterventionImageService implements DugunImageInterface
     public function openFile($filePath)
     {
         $file = $this->imageManager->make($filePath);
+
         return $file;
     }
 
@@ -30,6 +31,7 @@ class InterventionImageService implements DugunImageInterface
      * @param $y
      * @param $width
      * @param $height
+     *
      * @return Image
      */
     public function crop($file, $x, $y, $width, $height)
@@ -45,6 +47,7 @@ class InterventionImageService implements DugunImageInterface
      * @param $file
      * @param $resizeWidth
      * @param $resizeHeight
+     *
      * @return Image
      */
     public function resize($file, $resizeWidth = null, $resizeHeight = null)
@@ -65,7 +68,7 @@ class InterventionImageService implements DugunImageInterface
                 });
                 $cropStartX = ($file->getWidth() - $resizeWidth) / 2;
             }
-            $file = $this->crop($file, (int)$cropStartX, (int)$cropStartY, $resizeWidth, $resizeHeight);
+            $file = $this->crop($file, (int) $cropStartX, (int) $cropStartY, $resizeWidth, $resizeHeight);
         }
 
         return $file;
@@ -75,6 +78,7 @@ class InterventionImageService implements DugunImageInterface
      * @param $file
      * @param $watermarkPath
      * @param $watermarkPostion
+     *
      * @return Image
      */
     public function addWatermark($file, $watermarkPath, $watermarkPostion)
@@ -88,6 +92,7 @@ class InterventionImageService implements DugunImageInterface
 
     /**
      * @param $file
+     *
      * @return mixed
      */
     public function getWidth($file)
@@ -97,6 +102,7 @@ class InterventionImageService implements DugunImageInterface
 
     /**
      * @param $file
+     *
      * @return mixed
      */
     public function getHeight($file)
@@ -104,44 +110,48 @@ class InterventionImageService implements DugunImageInterface
         return $file->height();
     }
 
-
     /**
      * @param $file
      * @param $clockwiseDegree
+     *
      * @return mixed
      */
     public function rotate($file, $clockwiseDegree)
     {
         // Intervention class rotate anti clockwise
         if ($file instanceof Image) {
-            $file->rotate(- $clockwiseDegree);
+            $file->rotate(-$clockwiseDegree);
         }
+
         return $file;
     }
 
     /**
      * @param $file
      * @param $savePath
+     *
      * @return Image
      */
     public function save($file, $savePath)
     {
         if ($file instanceof Image) {
-            $file = $file->save($savePath . $file->basename);
+            $file = $file->save($savePath.$file->basename);
         }
+
         return $file;
     }
 
     /**
      * @param $file
+     *
      * @return string
      */
     public function getPath($file)
     {
         if ($file instanceof Image) {
-            $file = $file->dirname . '/' . $file->basename;
+            $file = $file->dirname.'/'.$file->basename;
         }
+
         return $file;
     }
-
 }

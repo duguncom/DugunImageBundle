@@ -8,14 +8,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SaveTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var ContainerInterface
      */
     private $container;
 
     /**
-     * @var DugunImageService $service
+     * @var DugunImageService
      */
     private $service;
 
@@ -32,14 +31,13 @@ class SaveTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Dugun\ImageBundle\Service\DugunImageService', $this->service);
 
         $file = new UploadedFile(
-            __DIR__ . '/../Resources/assets/test/file1.jpg',
+            __DIR__.'/../Resources/assets/test/file1.jpg',
             'file1.jpg',
             'image/jpeg'
         );
 
         $image = $this->service->openFile($file);
         $originalPath = $this->service->getPath($image);
-
 
         $this->service->save($image);
         $temporaryPath = $this->service->getPath($image);
@@ -49,16 +47,14 @@ class SaveTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($temporaryPath, $this->service->getPath($image));
 
         unlink($this->service->getPath($image));
-        /**
+        /*
          * check image is deleted
          */
         $this->assertFalse(file_exists($this->service->getPath($image)));
 
-        /**
+        /*
          * you must send an image instance!!11111birbirir
          */
         $this->service->save('asdasd');
-
-
     }
 }

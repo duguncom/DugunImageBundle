@@ -15,11 +15,11 @@
   "keywords": [
     "image bundle"
   ],
-  "licensse": [
+  "license": [
     "MIT"
   ],
   "require": {
-    "symfony/http-kernel": "~2.7",
+    "symfony/http-kernel": "~2.7|~3.1",
     "intervention/image": "^2.3"
   },
   "require-dev": {
