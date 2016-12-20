@@ -4,11 +4,11 @@ Installation
 1: Download the Bundle
 -------------------------
 
-You can add duguncom/imagebundle to your requirements with dev-master
+You can add `duguncom/imagebundle` to your requirements
 
-    "duguncom/imagebundle": "~1.0",
+    "duguncom/imagebundle": "~2.0",
     
 or you can directly run:
 
-    composer required duguncom/imagebundle
+    composer require duguncom/imagebundle
        
