@@ -22,6 +22,11 @@ class DugunImageService
     protected $kernelRootDir;
 
     /**
+     * @var InterventionImageService
+     */
+    protected $imageService;
+
+    /**
      * ImageService constructor.
      *
      * @param $parameters
@@ -29,7 +34,7 @@ class DugunImageService
      */
     public function __construct($parameters, $kernelRootDir)
     {
-        $this->imageService = new InterventionImageService();
+        $this->imageService = new InterventionImageService(['driver' => $parameters['driver']]);
         $this->parameters = $parameters;
         $this->kernelRootDir = $kernelRootDir;
     }

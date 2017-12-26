@@ -21,9 +21,10 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->root('dugun_image')
             ->children()
-            ->variableNode('temporary_folder')->defaultValue('/tmp')->info('Give a folder that your client have access to write permission')->end()
-            ->variableNode('watermark_position')->defaultValue('bottom')->end()
-            ->variableNode('watermark_file')->defaultValue('')->info('Give your watermark image path')->end()
+                ->variableNode('temporary_folder')->defaultValue('/tmp')->info('Give a folder that your client have access to write permission')->end()
+                ->variableNode('watermark_position')->defaultValue('bottom')->end()
+                ->variableNode('watermark_file')->defaultValue('')->info('Give your watermark image path')->end()
+                ->variableNode('driver')->defaultValue('gd')->end()
             ->end();
 
         // Here you should define the parameters that are allowed to

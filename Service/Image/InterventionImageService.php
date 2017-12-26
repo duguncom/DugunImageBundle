@@ -13,9 +13,9 @@ class InterventionImageService implements DugunImageInterface
      */
     private $imageManager;
 
-    public function __construct()
+    public function __construct(array $config = [])
     {
-        $this->imageManager = new ImageManager();
+        $this->imageManager = new ImageManager($config);
     }
 
     public function openFile($filePath)
