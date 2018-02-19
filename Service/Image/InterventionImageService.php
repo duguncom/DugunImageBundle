@@ -135,7 +135,7 @@ class InterventionImageService implements DugunImageInterface
     public function save($file, $savePath)
     {
         if ($file instanceof Image) {
-            $file = $file->save($savePath.$file->basename, 100);
+            $file = $file->save($savePath.$file->basename, 85);
         }
 
         return $file;
