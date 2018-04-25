@@ -1,6 +1,6 @@
 {
   "name": "duguncom/imagebundle",
-  "description": "An image manipulation bundle for duguncom",
+  "description": "An image manipulation bundle for duguncom and anneysencom",
   "type": "symfony-bundle",
   "authors": [
     {
@@ -18,13 +18,20 @@
   "license": [
     "MIT"
   ],
+  "config": {
+    "platform": {
+      "ext-gd": "dev-master"
+    }
+  },
   "require": {
-    "symfony/http-kernel": "~2.7|~3.1",
-    "intervention/image": "^2.3"
+    "php": "^7.1.3",
+    "symfony/http-kernel": "^4.0.8",
+    "intervention/image": "^2.3",
+    "symfony/yaml": "^4.0"
   },
   "require-dev": {
-    "symfony/framework-bundle": "~2.7",
-    "phpunit/phpunit": "~4.3"
+    "symfony/framework-bundle": "^4.0.8",
+    "phpunit/phpunit": "^6.5"
   },
   "autoload": {
     "psr-0": {
