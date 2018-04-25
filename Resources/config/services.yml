@@ -2,3 +2,4 @@ services:
     dugun_image.service.image_service:
         class: Dugun\ImageBundle\Service\DugunImageService
         arguments: ['%dugun_image.config%', '%kernel.root_dir%']
+        public: true

@@ -125,7 +125,7 @@ class DugunImageService
     {
         if ($image instanceof Image) {
             $watermarkFile = $this->getWatermarkFile();
-            if ($watermarkFile !== null) {
+            if (null !== $watermarkFile) {
                 $watermark = $this->openFile($watermarkFile);
                 $watermarkPosition = $this->getWatermarkPosition();
 

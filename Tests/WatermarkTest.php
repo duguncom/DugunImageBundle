@@ -6,7 +6,7 @@ use Dugun\ImageBundle\Service\DugunImageService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class WatermarkTest extends \PHPUnit_Framework_TestCase
+class WatermarkTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ContainerInterface

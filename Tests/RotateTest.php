@@ -6,7 +6,7 @@ use Dugun\ImageBundle\Service\DugunImageService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Rotate extends \PHPUnit_Framework_TestCase
+class Rotate extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ContainerInterface
